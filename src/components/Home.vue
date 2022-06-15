@@ -2,11 +2,17 @@
 import { ref } from 'vue'
 import { defineComponent } from 'vue'
 import DateTitle from './DateTitle.vue'
+import DataBox from './DataBox.vue'
+import Country from './Country.vue'
+
+
 
  export default defineComponent({
   name: 'Home',
   components: {
-    DateTitle
+    DateTitle,
+    DataBox,
+    Country
   },
   data(){
     return {
@@ -22,7 +28,11 @@ import DateTitle from './DateTitle.vue'
       const result = await fetch('https://api.covid19api.com/summary')
       const dataCovid = await result.json()
       return dataCovid
-    }
+    },
+    getCountryData(country:any){
+        this.stats = country
+        this.title = country.Country
+    },
   },
   async created (){
     const data = await this.fetchCovidData()
@@ -40,6 +50,8 @@ import DateTitle from './DateTitle.vue'
 <template>
     <main v-if="!loading">
         <DateTitle :text="title" :date="date"></DateTitle>
+        <DataBox :stats="stats"></DataBox>
+        <Country @get-country="getCountryData" :countries="country"></Country>
     </main>
     <main class="flex flex-col" v-else>
         <div class=" m-auto text-gray-500 text-3xl mt-10 mb-6">
@@ -50,6 +62,6 @@ import DateTitle from './DateTitle.vue'
     </main>
 </template>
 
-<style scoped>
+<style>
 
 </style>
