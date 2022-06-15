@@ -1,14 +1,13 @@
 <script  lang="ts">
 import { ref } from 'vue'
 import { defineComponent } from 'vue'
-
+import DateTitle from './DateTitle.vue'
 
  export default defineComponent({
-  // type inference enabled
-//   props: {
-//     name: String,
-//     msg: { type: String, required: true }
-//   },
+  name: 'Home',
+  components: {
+    DateTitle
+  },
   data(){
     return {
       loading:true,
@@ -39,8 +38,15 @@ import { defineComponent } from 'vue'
 </script>
 
 <template>
-    <main>
-        hola
+    <main v-if="!loading">
+        <DateTitle :text="title" :date="date"></DateTitle>
+    </main>
+    <main class="flex flex-col" v-else>
+        <div class=" m-auto text-gray-500 text-3xl mt-10 mb-6">
+            Fetching data
+        </div>
+        <img class="w-20 m-auto" src="../assets/loading.gif" alt="" srcset="">
+
     </main>
 </template>
 
